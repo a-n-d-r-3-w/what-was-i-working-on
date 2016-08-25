@@ -1,5 +1,6 @@
 var express = require('express');
 var app = express();
+var port = process.env.PORT || 5000;
 
 app.use(express.static('public'));
 
@@ -18,8 +19,8 @@ app.get('/:id', function (req, res) {
   res.send('This the page with id: ' + req.params.id);
 });
 
-app.listen(3000, function () {
-  console.log("App listening on port 3000!");
+app.listen(port, function () {
+  console.log('App listening on port ' + port + '!');
 });
 
 function generateId() {
