@@ -2,6 +2,17 @@ var express = require('express');
 var app = express();
 var port = process.env.PORT || 5000;
 
+var mongoose = require('mongoose');
+var productionUri = 'mongodb://dbuser:dbpassword@dbh36.mlab.com:27367/heroku_8460h5zf';
+mongoose.connect(productionUri, function(err) {
+  if (err) {
+    console.error(err.message);
+    console.log('Failed connecting to MongoDB.');
+  } else {
+    console.log('Successfully connected to MongoDB.');
+  }
+});
+
 app.use(express.static('public'));
 
 app.post('/create', function (req, res) {
