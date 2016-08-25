@@ -4,7 +4,7 @@ var app = express();
 app.use(express.static('public'));
 
 app.post('/createPage', function (req, res) {
-  res.send('Server received "createPage" message."');
+  res.send('Server received "createPage" message.');
 });
 
 app.listen(3000, function () {
