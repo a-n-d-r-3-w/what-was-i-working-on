@@ -62,7 +62,7 @@ app.get('/wwiwo/:id', function (req, res) {
 app.post('/wwiwo/:id', function (req, res) {
   console.log('Received POST for id: ' + req.params.id);
   console.log(req.body);
-  // TODO: Save data
+  // TODO: Save data to DB
   res.json(req.body);
   res.end();
 });
