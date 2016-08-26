@@ -30,8 +30,8 @@ app.post('/create', function (req, res) {
   var wwiwoDocument = new WwiwoModel({
     tasks: [
       {
-        name: 'Task 1',
-        state: 'State',
+        name: 'My task',
+        state: 'I\'m in the middle of...',
         nextSteps: [
           'Step 1',
           'Step 2'
