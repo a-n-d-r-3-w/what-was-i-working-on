@@ -13,34 +13,49 @@ mongoose.connect(productionUri, function(err) {
   }
 });
 
+var wwiwoSchema = mongoose.Schema({
+  tasks: [
+    {
+      name: String,
+      state: String,
+      nextSteps: [String]
+    }
+  ]
+});
+var WwiwoModel = mongoose.model('Wwiwo', wwiwoSchema);
+
 app.use(express.static('public'));
 
 app.post('/create', function (req, res) {
-  var id = generateId();
-  // Create unique id
-  // Add id to list of ids in table
-  // Create dummy data
-  // Redirect to ?id=foo
-  res.redirect('/' + id);
+  var wwiwoDocument = new WwiwoModel({
+    tasks: [
+      {
+        name: 'Task 1',
+        state: 'State',
+        nextSteps: [
+          'Step 1',
+          'Step 2'
+        ]
+      }
+    ]
+  });
+  wwiwoDocument.save(function (err, savedWwiwoDocument) {
+    if (err) return console.error(err);
+    var id = savedWwiwoDocument.id;
+    res.redirect('/wwiwo/' + id);
+  });
 });
 
-app.get('/:id', function (req, res) {
-  // Check if id exists
-  // If exists, show results for id. Otherwise, show error.
-  res.send('This the page with id: ' + req.params.id);
+app.get('/wwiwo/:id', function (req, res) {
+  var id = req.params.id;
+  WwiwoModel.findById(id, function (err, foundDocument) {
+    if (err) return console.error(err);
+    res.render('wwiwo', {title: foundDocument.tasks[0].name, message: 'Hello there!'});
+  });
 });
+
+app.set('view engine', 'pug');
 
 app.listen(port, function () {
   console.log('App listening on port ' + port + '!');
 });
-
-function generateId() {
-  const CHARACTERS = 'abcdefghijklmnopqrstuvwxyz0123456789';
-  var id = '';
-  var i;
-  for (i = 0; i < 16; i++) {
-    var randomIndex = Math.floor(Math.random() * CHARACTERS.length);
-    id += CHARACTERS[randomIndex];
-  }
-  return id;
-}
