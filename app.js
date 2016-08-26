@@ -50,7 +50,8 @@ app.get('/wwiwo/:id', function (req, res) {
   var id = req.params.id;
   WwiwoModel.findById(id, function (err, foundDocument) {
     if (err) return console.error(err);
-    res.render('wwiwo', {title: foundDocument.tasks[0].name, message: 'Hello there!'});
+    var task = foundDocument.tasks[0];
+    res.render('wwiwo', {task: task});
   });
 });
 
