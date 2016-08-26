@@ -1,0 +1,15 @@
+doctype html
+html(lang='en')
+    head
+        title What was I working on?
+    body
+        h1 What was I working on?
+        h2= task.name
+        textarea= task.name
+        h3 State of work
+        p= task.state
+        textarea= task.state
+        h3 Next steps
+        ol
+          each step in task.nextSteps
+            li= step
