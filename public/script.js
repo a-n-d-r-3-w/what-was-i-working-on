@@ -3,6 +3,9 @@ var taskNameEditor = document.getElementById('task-name-editor');
 var state = document.getElementById('state');
 var stateEditor = document.getElementById('state-editor');
 
+connectLabelWithEditor(taskName, taskNameEditor);
+connectLabelWithEditor(state, stateEditor);
+
 function connectLabelWithEditor (label, editor) {
   label.onclick = function (event) {
     label.style.display = 'none';
@@ -34,6 +37,3 @@ function connectLabelWithEditor (label, editor) {
     label.style.display = 'block';
   }
 }
-
-connectLabelWithEditor(taskName, taskNameEditor);
-connectLabelWithEditor(state, stateEditor);
