@@ -2,10 +2,11 @@ doctype html
 html(lang='en')
     head
         title What was I working on?
+        link(rel='stylesheet', href='/styles.css')
     body
         h1 What was I working on?
-        h2= task.name
-        textarea= task.name
+        p(id='task-name', onclick='showTaskNameEditor();')= task.name
+        textarea(id='task-name-editor')= task.name
         h3 State of work
         p= task.state
         textarea= task.state
@@ -13,3 +14,4 @@ html(lang='en')
         ol
           each step in task.nextSteps
             li= step
+        script(src='/script.js')
