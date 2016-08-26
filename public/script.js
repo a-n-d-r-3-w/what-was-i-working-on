@@ -27,8 +27,8 @@ function connectLabelWithEditor (label, editor) {
       xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {
           console.info('Task \'saved\'.');
-          var responseAsJson = JSON.parse(xhr.responseText);
-          var savedTask = responseAsJson.updatedTask;
+          var savedTask = JSON.parse(xhr.responseText);
+          console.dir(savedTask);
           // Re-render task
           taskName.textContent = savedTask.name;
           state.textContent = savedTask.state;

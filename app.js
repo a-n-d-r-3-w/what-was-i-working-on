@@ -62,9 +62,10 @@ app.get('/wwiwo/:id', function (req, res) {
 app.post('/wwiwo/:id', function (req, res) {
   console.log('Received POST for id: ' + req.params.id);
   console.log(req.body);
-  // TODO: Save data to DB
-  res.json(req.body);
-  res.end();
+  WwiwoModel.findByIdAndUpdate(req.params.id, {tasks: [req.body.updatedTask]}, {new: true}, function (err, savedDocument) {
+    if (err) return console.error(err);
+    res.json(savedDocument.tasks[0]);
+  });
 });
 
 app.set('view engine', 'pug');
