@@ -20,8 +20,31 @@ function connectLabelWithEditor (label, editor) {
   editor.onkeydown = function (event) {
     console.log(event.key);
     if (event.key === 'Enter') {
-      label.textContent = editor.value;
+      label.textContent = editor.value; // Optimistically update UI
       exitEditMode();
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', window.location.pathname, true);
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+          console.info('Task \'saved\'.');
+          var responseAsJson = JSON.parse(xhr.responseText);
+          var savedTask = responseAsJson.updatedTask;
+          // Re-render task
+          taskName.textContent = savedTask.name;
+          state.textContent = savedTask.state;
+        }
+      };
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      var task = {
+        name: taskName.textContent,
+        state: state.textContent,
+        nextSteps: [
+          'Step 1',
+          'Step 2'
+        ]
+      };
+      // Send entire task to DB to be saved
+      xhr.send(JSON.stringify({updatedTask: task}));
     }
     if (event.key === 'Escape') {
       exitEditMode();

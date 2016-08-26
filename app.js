@@ -1,5 +1,9 @@
 var express = require('express');
+var bodyParser = require('body-parser');
 var app = express();
+
+app.use(bodyParser.json());
+
 var port = process.env.PORT || 5000;
 
 var mongoose = require('mongoose');
@@ -53,6 +57,14 @@ app.get('/wwiwo/:id', function (req, res) {
     var task = foundDocument.tasks[0];
     res.render('wwiwo', {task: task});
   });
+});
+
+app.post('/wwiwo/:id', function (req, res) {
+  console.log('Received POST for id: ' + req.params.id);
+  console.log(req.body);
+  // TODO: Save data
+  res.json(req.body);
+  res.end();
 });
 
 app.set('view engine', 'pug');
