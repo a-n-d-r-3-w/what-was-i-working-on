@@ -1,17 +1,20 @@
 <!doctype html>
 <html>
-<title>What was I working on?</title>
 <head>
+  <title>What was I working on?</title>
+  <link rel='stylesheet' href='//fonts.googleapis.com/css?family=Andada' />
+  <link rel='stylesheet' href='styles.css' />
 </head>
 <body>
-  <h1>What was I working on?</h1>
-  <p>
-    Make it easy to pick up where you left off. Jot down the state of your
-    work and next steps.
-  </p>
-  <form action='/create' method='post'>
-    <button>Create your page</button>
-  </form>
-  <h2>Example</h2>
+  <h1 class='page-title'>What was I working on?</h1>
+  <div class='container'>
+    <p>
+      Make it easy to pick up where you left off. Jot down the state of your
+      work and next steps.
+    </p><br />
+    <form id='create-page-form' action='/create' method='post'>
+      <button id='create-page-button'>Create your page</button>
+    </form>
+  </div>
 </body>
 </html>

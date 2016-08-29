@@ -36,18 +36,15 @@ wwiwoSchema = mongoose.Schema({
 });
 WwiwoModel = mongoose.model('Wwiwo', wwiwoSchema);
 
-// POST to /create creates a new document, saves it to the database, and
-// redirects the user to the new page.
+// Create a new document, save it to the database, get an ID, and redirect the
+// user to the new page.
 app.post('/create', function (req, res) {
   var wwiwoDocument = new WwiwoModel({
     tasks: [
       {
         name: 'My task',
         state: 'I\'m in the middle of...',
-        nextSteps: [
-          'Step 1',
-          'Step 2'
-        ]
+        nextSteps: 'Next I should...'
       }
     ]
   });
@@ -68,7 +65,7 @@ app.get('/wwiwo/:id', function (req, res) {
   });
 });
 
-// Updating a page
+// Update the page for a particular ID
 app.post('/wwiwo/:id', function (req, res) {
   console.log('Received POST for id: ' + req.params.id);
   console.log(req.body);
