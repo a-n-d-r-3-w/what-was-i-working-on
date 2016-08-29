@@ -13,10 +13,10 @@ html(lang='en')
 
         h3 State
         p(id='state')= task.state
-        textarea(id='state-editor')= task.state
+        textarea(id='state-editor' class='small-editor')= task.state
 
         h3 Next steps
         p(id='next-steps')= task.nextSteps
-        textarea(id='next-steps-editor')= task.nextSteps
+        textarea(id='next-steps-editor' class='small-editor')= task.nextSteps
 
         script(src='/script.js')

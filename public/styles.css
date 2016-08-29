@@ -55,14 +55,7 @@ body {
   height: 1.5em;
 }
 
-#state-editor {
-  display: none;
-  width: 40em;
-  height: 4em;
-  font-size: 1em;
-}
-
-#next-steps-editor {
+.small-editor {
   display: none;
   width: 40em;
   height: 4em;
