@@ -11,6 +11,7 @@ connectLabelWithEditor(nextSteps, nextStepsEditor);
 
 function connectLabelWithEditor (label, editor) {
   label.onclick = function (event) {
+    // Hide label and show editor
     label.style.display = 'none';
     editor.style.display = 'block';
     editor.focus();
@@ -23,37 +24,41 @@ function connectLabelWithEditor (label, editor) {
   editor.onkeydown = function (event) {
     console.log(event.key);
     if (event.key === 'Enter') {
-      label.textContent = editor.value; // Optimistically update UI
-      exitEditMode();
-      var xhr = new XMLHttpRequest();
-      xhr.open('POST', window.location.pathname, true);
-      xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-          console.info('Task \'saved\'.');
-          var savedTask = JSON.parse(xhr.responseText);
-          console.dir(savedTask);
-          // Re-render task
-          taskName.textContent = savedTask.name;
-          state.textContent = savedTask.state;
-          nextSteps.textContent = savedTask.nextSteps;
-        }
-      };
-      xhr.setRequestHeader('Content-Type', 'application/json');
-      var task = {
-        name: taskName.textContent,
-        state: state.textContent,
-        nextSteps: nextSteps.textContent
-      };
-      // Send entire task to DB to be saved
-      xhr.send(JSON.stringify({updatedTask: task}));
+      saveAndExitEditMode();
     }
     if (event.key === 'Escape') {
+      // Remove the onblur callback, otherwiwe we will save. 
+      editor.onblur = function () {};
       exitEditMode();
     }
   };
 
-  editor.onblur = function (event) {
+  editor.onblur = saveAndExitEditMode;
+
+  function saveAndExitEditMode() {
+    label.textContent = editor.value; // Optimistically update UI
     exitEditMode();
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', window.location.pathname, true);
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState == 4 && xhr.status == 200) {
+        console.info('Task \'saved\'.');
+        var savedTask = JSON.parse(xhr.responseText);
+        console.dir(savedTask);
+        // Re-render task
+        taskName.textContent = savedTask.name;
+        state.textContent = savedTask.state;
+        nextSteps.textContent = savedTask.nextSteps;
+      }
+    };
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    var task = {
+      name: taskName.textContent,
+      state: state.textContent,
+      nextSteps: nextSteps.textContent
+    };
+    // Send entire task to DB to be saved
+    xhr.send(JSON.stringify({updatedTask: task}));
   }
 
   function exitEditMode() {
