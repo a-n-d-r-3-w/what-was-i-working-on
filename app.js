@@ -1,14 +1,21 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-var app = express();
+var express = require('express'),
+  bodyParser = require('body-parser'),
+  mongoose = require('mongoose'),
+  app,
+  port,
+  dbUri,
+  wwiwoSchema,
+  WwiwoModel;
 
+// Configure app settings
+app = express();
 app.use(bodyParser.json());
+app.use(express.static('public'));
+app.set('view engine', 'pug');
 
-var port = process.env.PORT || 5000;
-
-var mongoose = require('mongoose');
-var productionUri = 'mongodb://dbuser:dbpassword@dbh36.mlab.com:27367/heroku_8460h5zf';
-mongoose.connect(productionUri, function(err) {
+// Connect to database
+dbUri = 'mongodb://dbuser:dbpassword@dbh36.mlab.com:27367/heroku_8460h5zf';
+mongoose.connect(dbUri, function(err) {
   if (err) {
     console.error(err.message);
     console.log('Failed connecting to MongoDB.');
@@ -17,7 +24,8 @@ mongoose.connect(productionUri, function(err) {
   }
 });
 
-var wwiwoSchema = mongoose.Schema({
+// Set up database model
+wwiwoSchema = mongoose.Schema({
   tasks: [
     {
       name: String,
@@ -26,10 +34,10 @@ var wwiwoSchema = mongoose.Schema({
     }
   ]
 });
-var WwiwoModel = mongoose.model('Wwiwo', wwiwoSchema);
+WwiwoModel = mongoose.model('Wwiwo', wwiwoSchema);
 
-app.use(express.static('public'));
-
+// POST to /create creates a new document, saves it to the database, and
+// redirects the user to the new page.
 app.post('/create', function (req, res) {
   var wwiwoDocument = new WwiwoModel({
     tasks: [
@@ -50,6 +58,7 @@ app.post('/create', function (req, res) {
   });
 });
 
+// The page for a particular ID
 app.get('/wwiwo/:id', function (req, res) {
   var id = req.params.id;
   WwiwoModel.findById(id, function (err, foundDocument) {
@@ -59,6 +68,7 @@ app.get('/wwiwo/:id', function (req, res) {
   });
 });
 
+// Updating a page
 app.post('/wwiwo/:id', function (req, res) {
   console.log('Received POST for id: ' + req.params.id);
   console.log(req.body);
@@ -68,8 +78,8 @@ app.post('/wwiwo/:id', function (req, res) {
   });
 });
 
-app.set('view engine', 'pug');
-
+// Launch app
+port = process.env.PORT || 5000;
 app.listen(port, function () {
   console.log('App listening on port ' + port + '!');
 });
