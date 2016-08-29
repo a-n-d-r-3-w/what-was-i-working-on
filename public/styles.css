@@ -60,6 +60,12 @@ body {
   height: 1.5em;
 }
 
+#hide-note {
+  padding: 0 1em;
+  color: royalblue;
+  cursor: pointer;
+}
+
 .small-editor {
   display: none;
   width: 40em;
@@ -72,12 +78,20 @@ h3 {
   margin-bottom: 0.5em;
 }
 
+header {
+  padding: 1.25em;
+  background-color: #F3DB91;
+  text-align: center;
+  font-size: 0.75em;
+}
+
 footer {
   position: absolute;
   right: 0;
   bottom: 0;
   left: 0;
-  padding: 1rem;
+  padding: 1.25em;
   background-color: #F3DB91;
   text-align: center;
+  font-size: 0.75em;
 }
