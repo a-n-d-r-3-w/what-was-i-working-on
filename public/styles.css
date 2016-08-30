@@ -60,13 +60,13 @@ body {
   height: 1.5em;
 }
 
-#hide-button {
-  padding: 0 1em;
+a {
   color: royalblue;
   cursor: pointer;
+  text-decoration: none;
 }
 
-#hide-button:hover {
+a:hover {
   color: blue;
 }
 
