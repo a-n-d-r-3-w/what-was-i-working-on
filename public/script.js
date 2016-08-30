@@ -27,7 +27,7 @@ function connectLabelWithEditor (label, editor) {
       saveAndExitEditMode();
     }
     if (event.key === 'Escape') {
-      // Remove the onblur callback, otherwiwe we will save. 
+      // Remove the onblur callback, otherwise we will save.
       editor.onblur = function () {};
       exitEditMode();
     }
@@ -42,9 +42,7 @@ function connectLabelWithEditor (label, editor) {
     xhr.open('POST', window.location.pathname, true);
     xhr.onreadystatechange = function () {
       if (xhr.readyState == 4 && xhr.status == 200) {
-        console.info('Task \'saved\'.');
         var savedTask = JSON.parse(xhr.responseText);
-        console.dir(savedTask);
         // Re-render task
         taskName.textContent = savedTask.name;
         state.textContent = savedTask.state;

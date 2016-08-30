@@ -60,10 +60,14 @@ body {
   height: 1.5em;
 }
 
-#hide-note {
+#hide-button {
   padding: 0 1em;
   color: royalblue;
   cursor: pointer;
+}
+
+#hide-button:hover {
+  color: blue;
 }
 
 .small-editor {
