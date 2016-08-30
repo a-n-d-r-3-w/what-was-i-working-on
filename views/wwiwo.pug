@@ -1,9 +1,6 @@
 doctype html
 html(lang='en')
-    head
-        title What was I working on?
-        link(rel='stylesheet', href='//fonts.googleapis.com/css?family=Andada')
-        link(rel='stylesheet', href='/static/styles.css')
+    include ./includes/head.pug
     body
       header This page is for you. Bookmark it so you can return to it later.
         span(id='hide-note') Hide
@@ -22,4 +19,4 @@ html(lang='en')
         textarea(id='next-steps-editor' class='small-editor')= task.nextSteps
 
         script(src='/static/script.js')
-      footer Copyright 2016 Andrew A. Liu
+      include ./includes/footer.pug
