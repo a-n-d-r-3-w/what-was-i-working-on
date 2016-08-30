@@ -3,7 +3,7 @@ html(lang='en')
     head
         title What was I working on?
         link(rel='stylesheet', href='//fonts.googleapis.com/css?family=Andada')
-        link(rel='stylesheet', href='/styles.css')
+        link(rel='stylesheet', href='/static/styles.css')
     body
       header This page is for you. Bookmark it so you can return to it later.
         span(id='hide-note') Hide
@@ -21,5 +21,5 @@ html(lang='en')
         p(id='next-steps')= task.nextSteps
         textarea(id='next-steps-editor' class='small-editor')= task.nextSteps
 
-        script(src='/script.js')
+        script(src='/static/script.js')
       footer Copyright 2016 Andrew A. Liu

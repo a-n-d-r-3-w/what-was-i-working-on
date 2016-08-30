@@ -10,7 +10,7 @@ var express = require('express'),
 // Configure app settings
 app = express();
 app.use(bodyParser.json());
-app.use(express.static('public'));
+app.use('/static', express.static('public'));
 app.set('view engine', 'pug');
 
 // Connect to database
@@ -35,6 +35,11 @@ wwiwoSchema = mongoose.Schema({
   ]
 });
 WwiwoModel = mongoose.model('Wwiwo', wwiwoSchema);
+
+// The home page
+app.get('/', function (req, res) {
+  res.render('home');
+});
 
 // Create a new document, save it to the database, get an ID, and redirect the
 // user to the new page.
