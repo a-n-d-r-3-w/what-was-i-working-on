@@ -10,12 +10,21 @@ ol {
 
 body {
   background-color: #C7974F;
+  height: 100%;
+}
+
+.vertically-centered-container {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
 }
 
 .page-title {
   font-size: 3em;
   text-align: center;
-  padding: 3em 1em 1em 1em;
+  padding: 0 1em 1em 1em;
 }
 
 .container {
