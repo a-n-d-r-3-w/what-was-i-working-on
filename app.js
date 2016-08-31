@@ -63,17 +63,16 @@ app.post('/create', function (req, res) {
 // The page for a particular ID
 app.get('/wwiwo/:id', function (req, res) {
   var id = req.params.id;
+  var showReminder = req.query.showreminder !== 'false';
   WwiwoModel.findById(id, function (err, foundDocument) {
     if (err) return console.error(err);
     var task = foundDocument.tasks[0];
-    res.render('wwiwo', {task: task});
+    res.render('wwiwo', {task: task, showReminder: showReminder});
   });
 });
 
 // Update the page for a particular ID
 app.post('/wwiwo/:id', function (req, res) {
-  console.log('Received POST for id: ' + req.params.id);
-  console.log(req.body);
   WwiwoModel.findByIdAndUpdate(req.params.id, {tasks: [req.body.updatedTask]}, {new: true}, function (err, savedDocument) {
     if (err) return console.error(err);
     res.json(savedDocument.tasks[0]);

@@ -2,9 +2,10 @@ doctype html
 html(lang='en')
     include ./includes/head.pug
     body
-      header This page is for you. Bookmark it so you can return to it later.
-        span &nbsp;&nbsp;&nbsp;&nbsp;
-        a(id='link-to-hide-reminder') Hide
+      if (showReminder)
+        header This page is for you. Bookmark it so you can return to it later.
+          span &nbsp;&nbsp;&nbsp;&nbsp;
+          a(id='link-to-hide-reminder') Hide
       br
       br
       br

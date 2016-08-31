@@ -6,7 +6,7 @@ var nextSteps = document.getElementById('next-steps');
 var nextStepsEditor = document.getElementById('next-steps-editor');
 var linkToHideReminder = document.getElementById('link-to-hide-reminder');
 
-linkToHideReminder.href = window.location.href; // TODO: + '/hide-reminder'?
+linkToHideReminder.href = window.location.href + '?showreminder=false';
 
 connectLabelWithEditor(taskName, taskNameEditor);
 connectLabelWithEditor(state, stateEditor);
