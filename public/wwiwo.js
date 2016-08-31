@@ -5,8 +5,9 @@ var stateEditor = document.getElementById('state-editor');
 var nextSteps = document.getElementById('next-steps');
 var nextStepsEditor = document.getElementById('next-steps-editor');
 var linkToHideReminder = document.getElementById('link-to-hide-reminder');
-
-linkToHideReminder.href = window.location.origin + window.location.pathname + '?showreminder=false';
+if (linkToHideReminder) {
+  linkToHideReminder.href = window.location.origin + window.location.pathname + '?showreminder=false';
+}
 
 connectLabelWithEditor(taskName, taskNameEditor);
 connectLabelWithEditor(state, stateEditor);

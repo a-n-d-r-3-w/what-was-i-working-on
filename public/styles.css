@@ -77,6 +77,14 @@ body {
   height: 1.5em;
 }
 
+#state {
+  min-height: 2em;
+}
+
+#next-steps {
+  min-height: 2em;
+}
+
 a {
   color: royalblue;
   cursor: pointer;
