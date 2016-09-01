@@ -73,7 +73,7 @@ body {
 #task-name-editor {
   display: none;
   font-size: 2em;
-  width: 20em;
+  width: 17em;
   height: 1.5em;
 }
 
@@ -97,7 +97,7 @@ a:hover {
 
 .small-editor {
   display: none;
-  width: 40em;
+  width: 34em;
   height: 4em;
   font-size: 1em;
 }
