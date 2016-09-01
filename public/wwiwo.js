@@ -4,10 +4,11 @@ var state = document.getElementById('state');
 var stateEditor = document.getElementById('state-editor');
 var nextSteps = document.getElementById('next-steps');
 var nextStepsEditor = document.getElementById('next-steps-editor');
+var reminder = document.getElementById('reminder');
 var linkToHideReminder = document.getElementById('link-to-hide-reminder');
-if (linkToHideReminder) {
-  linkToHideReminder.href = window.location.origin + window.location.pathname + '?showreminder=false';
-}
+linkToHideReminder.onclick = setShowReminder(false);
+var linkToShowReminder = document.getElementById('link-to-show-reminder');
+linkToShowReminder.onclick = setShowReminder(true);
 
 connectLabelWithEditor(taskName, taskNameEditor);
 connectLabelWithEditor(state, stateEditor);
@@ -46,7 +47,7 @@ function connectLabelWithEditor (label, editor) {
     xhr.open('POST', window.location.pathname, true);
     xhr.onreadystatechange = function () {
       if (xhr.readyState == 4 && xhr.status == 200) {
-        var savedTask = JSON.parse(xhr.responseText);
+        var savedTask = JSON.parse(xhr.responseText).task;
         // Re-render task
         taskName.textContent = savedTask.name;
         state.textContent = savedTask.state;
@@ -66,5 +67,25 @@ function connectLabelWithEditor (label, editor) {
   function exitEditMode() {
     editor.style.display = 'none';
     label.style.display = 'block';
+  }
+}
+
+function setShowReminder(show) {
+  return function () {
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', window.location.pathname, true);
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState == 4 && xhr.status == 200) {
+        reminder.style.visibility = show ? 'visible' : 'hidden'; // Optimistically show/hide reminder
+      }
+    };
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    var task = {
+      name: taskName.textContent,
+      state: state.textContent,
+      nextSteps: nextSteps.textContent
+    };
+    // Send entire task to DB to be saved
+    xhr.send(JSON.stringify({updatedTask: task, showReminder: show}));
   }
 }
