@@ -17,6 +17,8 @@ connectLabelWithEditor(nextSteps, nextStepsEditor);
 function connectLabelWithEditor (label, editor) {
   label.onclick = function (event) {
     // Hide label and show editor
+    editor.style.height = label.offsetHeight + 'px';
+    editor.style.width = label.offsetWidth + 'px';
     label.style.display = 'none';
     editor.style.display = 'block';
     editor.focus();
