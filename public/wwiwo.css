@@ -37,3 +37,11 @@ h3 {
   margin-top: 1em;
   margin-bottom: 0.5em;
 }
+
+header {
+  padding: 1.25em;
+  background-color: #FFFBCC; /* Post-it note yellow */
+  color: black;
+  text-align: center;
+  font-size: 0.75em;
+}
