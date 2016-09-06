@@ -51,6 +51,11 @@ app.post('/create', function (req, res) {
         name: 'My task',
         state: 'I\'m in the middle of...',
         nextSteps: 'Next I should...'
+      },
+      {
+        name: 'My task',
+        state: 'I\'m in the middle of...',
+        nextSteps: 'Next I should...'
       }
     ],
     showReminder: true
@@ -67,9 +72,9 @@ app.get('/wwiwo/:id', function (req, res) {
   var id = req.params.id;
   WwiwoModel.findById(id, function (err, foundDocument) {
     if (err) return console.error(err);
-    var task = foundDocument.tasks[0];
+    var tasks = foundDocument.tasks;
     var showReminder = foundDocument.showReminder !== false;
-    res.render('wwiwo', {task: task, showReminder: showReminder});
+    res.render('wwiwo', {tasks: tasks, showReminder: showReminder});
   });
 });
 
@@ -82,7 +87,7 @@ app.post('/wwiwo/:id', function (req, res) {
     }, {new: true}, function (err, savedDocument) {
       if (err) return console.error(err);
       res.json({
-        task: savedDocument.tasks[0],
+        tasks: savedDocument.tasks,
         showReminder: savedDocument.showReminder
       });
     }

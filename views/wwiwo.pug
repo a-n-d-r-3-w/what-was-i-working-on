@@ -7,18 +7,20 @@ html(lang='en')
         span &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         a(id='link-to-hide-reminder') Hide
       div(class='wwiwo-container')
-        div(class='container')
+        each task in tasks
+          div(class='container')
 
-          h2(id='task-name')= task.name
-          textarea(id='task-name-editor')= task.name
+            // TODO: Append ids with task index
+            h2(id='task-name')= task.name
+            textarea(id='task-name-editor')= task.name
 
-          h3 State
-          p(id='state')= task.state
-          textarea(id='state-editor' class='small-editor')= task.state
+            h3 State
+            p(id='state')= task.state
+            textarea(id='state-editor' class='small-editor')= task.state
 
-          h3 Next steps
-          p(id='next-steps')= task.nextSteps
-          textarea(id='next-steps-editor' class='small-editor')= task.nextSteps
+            h3 Next steps
+            p(id='next-steps')= task.nextSteps
+            textarea(id='next-steps-editor' class='small-editor')= task.nextSteps
 
       include ./includes/footer.pug
       script(src='/static/wwiwo.js')

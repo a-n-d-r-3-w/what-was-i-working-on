@@ -1,3 +1,4 @@
+// TODO: Store elements in an array of JSON objects
 var taskName = document.getElementById('task-name');
 var taskNameEditor = document.getElementById('task-name-editor');
 var state = document.getElementById('state');
