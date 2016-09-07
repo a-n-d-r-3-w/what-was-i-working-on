@@ -8,23 +8,23 @@
   transform: translate(-50%, -50%);
 }
 
-#task-name {
+.task-name {
   font-size: 2em;
   min-height: 1em;
 }
 
-#task-name-editor {
+.task-name-editor {
   display: none;
   font-size: 2em;
   width: 17em;
   height: 1.5em;
 }
 
-#state {
+.state {
   min-height: 2em;
 }
 
-#next-steps {
+.next-steps {
   min-height: 2em;
 }
 

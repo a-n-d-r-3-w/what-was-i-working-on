@@ -82,7 +82,7 @@ app.get('/wwiwo/:id', function (req, res) {
 app.post('/wwiwo/:id', function (req, res) {
   WwiwoModel.findByIdAndUpdate(req.params.id,
     {
-      tasks: [req.body.updatedTask],
+      tasks: req.body.updatedTasks,
       showReminder: req.body.showReminder
     }, {new: true}, function (err, savedDocument) {
       if (err) return console.error(err);

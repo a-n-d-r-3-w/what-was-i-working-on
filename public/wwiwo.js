@@ -1,19 +1,25 @@
-// TODO: Store elements in an array of JSON objects
-var taskName = document.getElementById('task-name');
-var taskNameEditor = document.getElementById('task-name-editor');
-var state = document.getElementById('state');
-var stateEditor = document.getElementById('state-editor');
-var nextSteps = document.getElementById('next-steps');
-var nextStepsEditor = document.getElementById('next-steps-editor');
+var containers = document.getElementsByClassName('container');
+var i;
+var tasksElements = [];
+for (i = 0; i < containers.length; i++) {
+  tasksElements[i] = {
+    taskName: document.getElementsByClassName('task-name')[i],
+    taskNameEditor: document.getElementsByClassName('task-name-editor')[i],
+    state: document.getElementsByClassName('state')[i],
+    stateEditor: document.getElementsByClassName('state-editor')[i],
+    nextSteps: document.getElementsByClassName('next-steps')[i],
+    nextStepsEditor: document.getElementsByClassName('next-steps-editor')[i]
+  }
+  connectLabelWithEditor(tasksElements[i].taskName, tasksElements[i].taskNameEditor);
+  connectLabelWithEditor(tasksElements[i].state, tasksElements[i].stateEditor);
+  connectLabelWithEditor(tasksElements[i].nextSteps, tasksElements[i].nextStepsEditor);
+}
+
 var reminder = document.getElementById('reminder');
 var linkToHideReminder = document.getElementById('link-to-hide-reminder');
 linkToHideReminder.onclick = setShowReminder(false);
 var linkToShowReminder = document.getElementById('link-to-show-reminder');
 linkToShowReminder.onclick = setShowReminder(true);
-
-connectLabelWithEditor(taskName, taskNameEditor);
-connectLabelWithEditor(state, stateEditor);
-connectLabelWithEditor(nextSteps, nextStepsEditor);
 
 function connectLabelWithEditor (label, editor) {
   label.onclick = function (event) {
@@ -50,21 +56,28 @@ function connectLabelWithEditor (label, editor) {
     xhr.open('POST', window.location.pathname, true);
     xhr.onreadystatechange = function () {
       if (xhr.readyState == 4 && xhr.status == 200) {
-        var savedTask = JSON.parse(xhr.responseText).task;
-        // Re-render task
-        taskName.textContent = savedTask.name;
-        state.textContent = savedTask.state;
-        nextSteps.textContent = savedTask.nextSteps;
+        var savedTasks = JSON.parse(xhr.responseText).tasks;
+        // Re-render tasks
+        var i;
+        for (i = 0; i < savedTasks.length; i++) {
+          tasksElements[i].taskName.textContent = savedTasks[i].name;
+          tasksElements[i].state.textContent = savedTasks[i].state;
+          tasksElements[i].nextSteps.textContent = savedTasks[i].nextSteps;
+        }
       }
     };
     xhr.setRequestHeader('Content-Type', 'application/json');
-    var task = {
-      name: taskName.textContent,
-      state: state.textContent,
-      nextSteps: nextSteps.textContent
-    };
-    // Send entire task to DB to be saved
-    xhr.send(JSON.stringify({updatedTask: task}));
+    var tasks = [];
+    var i;
+    for (i = 0; i < tasksElements.length; i++) {
+      tasks[i] = {
+        name: tasksElements[i].taskName.textContent,
+        state: tasksElements[i].state.textContent,
+        nextSteps: tasksElements[i].nextSteps.textContent
+      }
+    }
+    // Send all tasks to DB to be saved
+    xhr.send(JSON.stringify({updatedTasks: tasks}));
   }
 
   function exitEditMode() {
@@ -73,22 +86,26 @@ function connectLabelWithEditor (label, editor) {
   }
 }
 
-function setShowReminder(show) {
+function setShowReminder(showReminder) {
   return function () {
     var xhr = new XMLHttpRequest();
     xhr.open('POST', window.location.pathname, true);
     xhr.onreadystatechange = function () {
       if (xhr.readyState == 4 && xhr.status == 200) {
-        reminder.style.visibility = show ? 'visible' : 'hidden'; // Optimistically show/hide reminder
+        reminder.style.visibility = showReminder ? 'visible' : 'hidden'; // Optimistically show/hide reminder
       }
     };
     xhr.setRequestHeader('Content-Type', 'application/json');
-    var task = {
-      name: taskName.textContent,
-      state: state.textContent,
-      nextSteps: nextSteps.textContent
-    };
+    var tasks = [];
+    var i;
+    for (i = 0; i < tasksElements.length; i++) {
+      tasks[i] = {
+        name: tasksElements[i].taskName.textContent,
+        state: tasksElements[i].state.textContent,
+        nextSteps: tasksElements[i].nextSteps.textContent
+      }
+    }
     // Send entire task to DB to be saved
-    xhr.send(JSON.stringify({updatedTask: task, showReminder: show}));
+    xhr.send(JSON.stringify({updatedTasks: tasks, showReminder: showReminder}));
   }
 }

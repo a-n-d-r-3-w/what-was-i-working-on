@@ -11,16 +11,16 @@ html(lang='en')
           div(class='container')
 
             // TODO: Append ids with task index
-            h2(id='task-name')= task.name
-            textarea(id='task-name-editor')= task.name
+            h2(class='task-name')= task.name
+            textarea(class='task-name-editor')= task.name
 
             h3 State
-            p(id='state')= task.state
-            textarea(id='state-editor' class='small-editor')= task.state
+            p(class='state')= task.state
+            textarea(class='state-editor small-editor')= task.state
 
             h3 Next steps
-            p(id='next-steps')= task.nextSteps
-            textarea(id='next-steps-editor' class='small-editor')= task.nextSteps
+            p(class='next-steps')= task.nextSteps
+            textarea(class='next-steps-editor small-editor')= task.nextSteps
 
       include ./includes/footer.pug
       script(src='/static/wwiwo.js')
