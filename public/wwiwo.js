@@ -2,17 +2,36 @@ var containers = document.getElementsByClassName('container');
 var i;
 var tasksElements = [];
 for (i = 0; i < containers.length; i++) {
+  var taskName = document.getElementsByClassName('task-name')[i];
+  var taskNameEditor = document.getElementsByClassName('task-name-editor')[i];
+  var stateEditor = document.getElementsByClassName('state-editor')[i];
+  var state = document.getElementsByClassName('state')[i];
+  var nextSteps = document.getElementsByClassName('next-steps')[i];
+  var nextStepsEditor = document.getElementsByClassName('next-steps-editor')[i];
   tasksElements[i] = {
-    taskName: document.getElementsByClassName('task-name')[i],
-    taskNameEditor: document.getElementsByClassName('task-name-editor')[i],
-    state: document.getElementsByClassName('state')[i],
-    stateEditor: document.getElementsByClassName('state-editor')[i],
-    nextSteps: document.getElementsByClassName('next-steps')[i],
-    nextStepsEditor: document.getElementsByClassName('next-steps-editor')[i]
+    taskName: taskName,
+    taskNameEditor: taskNameEditor,
+    state: state,
+    stateEditor: stateEditor,
+    nextSteps: nextSteps,
+    nextStepsEditor: nextStepsEditor
   }
-  connectLabelWithEditor(tasksElements[i].taskName, tasksElements[i].taskNameEditor);
-  connectLabelWithEditor(tasksElements[i].state, tasksElements[i].stateEditor);
-  connectLabelWithEditor(tasksElements[i].nextSteps, tasksElements[i].nextStepsEditor);
+  connectLabelWithEditor(taskName, taskNameEditor);
+  connectLabelWithEditor(state, stateEditor);
+  connectLabelWithEditor(nextSteps, nextStepsEditor);
+  taskNameEditor.addEventListener('keydown', blurAndClick(taskNameEditor, state));
+  stateEditor.addEventListener('keydown', blurAndClick(stateEditor, nextSteps));
+}
+
+function blurAndClick(elementToBlur, elementToClick) {
+  return function (event) {
+    if (event.key === 'Tab') {
+      elementToBlur.blur();
+      setTimeout(function () {
+        elementToClick.click();
+      }, 100);
+    }
+  }
 }
 
 var reminder = document.getElementById('reminder');
